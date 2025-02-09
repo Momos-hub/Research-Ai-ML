@@ -2,149 +2,226 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jet Engine AR | Aerospace Predictive Maintenance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>AI-Driven Aerospace Maintenance | AR Experience</title>
     
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- FontAwesome for Icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    
-    <!-- A-Frame & AR.js for 3D Model -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- A-Frame & AR.js -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ar.js@latest/aframe/build/aframe-ar.min.js"></script>
-    
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
     <style>
+        :root {
+            --primary-blue: #58a6ff;
+            --dark-bg: #0d1117;
+            --section-bg: #161b22;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background: #0d1117;
+            font-family: 'Segoe UI', system-ui;
+            background: var(--dark-bg);
             color: white;
-            text-align: center;
+            overflow-x: hidden;
         }
 
-        /* Navbar */
         .navbar {
-            background: #1e2329;
-            padding: 15px;
-        }
-        
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-            color: #58a6ff !important;
-        }
-        
-        .nav-link {
-            color: white !important;
-            font-size: 18px;
+            background: var(--section-bg);
+            border-bottom: 1px solid #30363d;
         }
 
-        /* Hero Section */
+        .navbar .nav-link {
+            color: var(--primary-blue) !important; /* Highlight color for nav links */
+        }
+
         .hero {
             position: relative;
-            text-align: center;
-            color: white;
-            padding: 100px 20px;
-            background: url('https://source.unsplash.com/1600x900/?aerospace,technology') no-repeat center center/cover;
+            padding: 120px 20px;
+            background: linear-gradient(45deg, rgba(13,17,23,0.9), rgba(13,17,23,0.7)),
+                        url('https://images.unsplash.com/photo-1457364887197-9150188c107b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
         }
 
-        .hero h1 {
-            font-size: 36px;
-            font-weight: bold;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        .ar-section {
+            padding: 40px 0;
+            background: var(--section-bg);
+            min-height: 80vh;
         }
 
-        .hero p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 10px auto;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+        .features {
+            padding: 60px 0;
         }
 
-        /* 3D Model */
-        .model-section {
-            padding: 50px 20px;
+        .feature-card {
+            background: var(--section-bg);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 15px;
+            transition: transform 0.3s;
         }
 
-        .sketchfab-embed-wrapper {
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        #ar-model {
             width: 100%;
-            height: 80vh;
+            height: 60vh;
+            border: 2px solid var(--primary-blue);
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Footer */
-        .footer {
-            background: #1e2329;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 28px;
-            }
-            .hero p {
-                font-size: 16px;
-            }
+            .hero { padding: 80px 15px; }
+            #ar-model { height: 50vh; }
+            .display-4 { font-size: 2rem; }
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #58a6ff, #2ea043);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Aerospace AR</a>
+            <a class="navbar-brand gradient-text" href="#">✈️ AI Maintenance</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"><i class="fas fa-bars text-white"></i></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/mukesh-gond-99b710215" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://your-research-link.com" target="_blank"><i class="fas fa-book"></i> Research Proposal</a></li>
-                    <li class="nav-item"><a class="nav-link" href="mailto:your.email@example.com"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ar" data-bs-toggle="tooltip" title="Try AR Experience">
+                            <i class="fas fa-vr-cardboard"></i> AR Demo
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.linkedin.com/in/mukesh-gond-99b710215" target="_blank">
+                            <i class="fab fa-linkedin"></i> Team
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">
+                            <i class="fas fa-microchip"></i> Technology
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://drive.google.com/drive/folders/1Oj2og24KLJixpds4hxd0461MPBUXNR8D" target="_blank">
+                            <i class="fas fa-file-alt"></i> Research Proposal
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero">
-        <h1>Revolutionizing Aerospace with AI & Predictive Maintenance</h1>
-        <p>Experience the future of aerospace engineering with Augmented Reality & Machine Learning-driven insights.</p>
-    </div>
-
-    <!-- 3D Model Section -->
-    <div class="model-section">
-        <h2>Explore the Jet Engine in Augmented Reality</h2>
-        <div class="sketchfab-embed-wrapper">
-            <iframe 
-                title="Jet Engine" 
-                frameborder="0" 
-                allowfullscreen 
-                mozallowfullscreen="true" 
-                webkitallowfullscreen="true" 
-                allow="autoplay; fullscreen; xr-spatial-tracking" 
-                src="https://sketchfab.com/models/ea66c2db873d4182b116529697d18571/embed?ui_infos=0&ui_controls=1&ui_stop=0&ui_watermark=0">
-            </iframe>
+    <section class="hero">
+        <div class="container">
+            <h1 class="display-4 mb-4">Predictive Maintenance 2.0</h1>
+            <p class="lead mb-4">
+                Combining <span class="gradient-text">Generative AI</span> and <span class="gradient-text">Explainable ML</span><br>
+                for Next-Gen Aerospace Systems
+            </p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-8">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-rocket me-2"></i>Key Innovation</h4>
+                        <p>Synthetic data-enhanced models achieve 98.7% accuracy in predicting rare engine failures</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- AR Experience Section -->
+    <section class="ar-section" id="ar">
+        <div class="container text-center">
+            <h2 class="mb-4"><i class="fas fa-cube me-2"></i>Interactive AR Demo</h2>
+            <p class="mb-4">Scan QR code or use marker below to view predictive maintenance insights</p>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="model-section p-3">
+                        <div class="sketchfab-embed-wrapper">
+                            <iframe title="Jet Engine" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/ea66c2db873d4182b116529697d18571/embed"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-dark p-4 rounded-3">
+                        <h4 class="mb-3">How It Works</h4>
+                        <div class="text-start">
+                            <p><i class="fas fa-database me-2"></i>GAN-generated synthetic failure data</p>
+                            <p><i class="fas fa-brain me-2"></i>LSTM Neural Network predictions</p>
+                            <p><i class="fas fa-chart-bar me-2"></i>Real-time sensor analytics</p>
+                        </div>
+                        <button class="btn btn-outline-primary mt-3" id="arHelp">
+                            <i class="fas fa-question-circle"></i> AR Instructions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="text-center mb-5">Technology Stack</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-robot fa-3x mb-3"></i>
+                        <h4>Explainable AI</h4>
+                        <p>SHAP values and LIME integration for transparent predictions</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-dna fa-3x mb-3"></i>
+                        <h4>Synthetic Data</h4>
+                        <p>Variational Autoencoders generating rare failure scenarios</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-cloud fa-3x mb-3"></i>
+                        <h4>Cloud Integration</h4>
+                        <p>AWS IoT Core for real-time fleet monitoring</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <div class="footer">
-        © 2025 Mukesh Gond | MSc Data Science | Aerospace AR & ML Research
-    </div>
+    <footer class="footer bg-dark py-4">
+        <div class="container text-center">
+            <h5 class="text-white">Empowering Data Science for the Future</h5>
+            <p class="mb-0">
+                Research Team: Mukesh Gond | Bhagyashree Mahajan | Isha Lad<br>
+                Guided by: Dr. Yogesh Naik | NMIMS M.Sc Data Science
+            </p>
+            <div class="mb-3">
+               
+            </div>
+        </div>
+    </footer>
 
-    <!-- Bootstrap JavaScript -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
